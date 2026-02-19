@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FinePrint X-Ray</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>FinePrint X-Ray</h1>
+    <p class="tagline">Honesty reports for credit & loan terms</p>
+  </header>
+
+  <main class="container">
+    <section id="upload" class="drop-zone" aria-label="Upload PDF">
+      <input id="fileInput" type="file" accept="application/pdf" hidden />
+      <div class="drop-content" id="dropContent" tabindex="0">
+        <div class="icon" aria-hidden="true">📄</div>
+        <div class="instructions">Drag & drop a text PDF here, or click to choose</div>
+        <div id="status" class="status" role="status">Idle</div>
+      </div>
+    </section>
+
+    <section class="progress-strip" aria-label="Progress">
+      <div class="progress-step" data-step="scan">Scan</div>
+      <div class="progress-step" data-step="reveal">Reveal</div>
+      <div class="progress-step" data-step="explain">Explain</div>
+    </section>
+
+    <section id="report" class="report hidden" aria-label="Honesty Report">
+      <div class="report-header">
+        <div id="riskLabel" class="verdict">Risk: Unscored</div>
+        <div class="actions">
+          <button id="resetBtn" disabled>Reset</button>
+          <button id="downloadTxt" disabled>Download TXT</button>
+          <button id="downloadJson" disabled>Download JSON</button>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3>Money Traps</h3>
+          <div class="muted">Top candidate clauses</div>
+          <ul id="moneyTrapsList"></ul>
+        </div>
+        <div class="card">
+          <h3>Escape Difficulty</h3>
+          <div id="escapeSummary" class="muted">Not scored yet</div>
+          <ul id="escapeChecklist"></ul>
+        </div>
+        <div class="card">
+          <h3>Risk Label</h3>
+          <div id="riskScore" class="score">0 / 10</div>
+          <div id="scoreDetails" class="muted">No signals detected</div>
+        </div>
+      </div>
+      <div class="how-scored" id="howScored">
+        <h4>How we scored this</h4>
+        <ul id="scoreBreakdown"></ul>
+      </div>
+    </section>
+
+    <section id="evidence" class="evidence" aria-label="Evidence Viewer">
+      <div class="evidence-header">
+        <div class="title">Evidence Viewer</div>
+        <div class="pager">
+          <button id="prevPage" disabled aria-label="Previous page">Prev</button>
+          <input id="pageNumber" type="number" min="1" value="1" aria-label="Page number" />
+          <span id="pageCount">/ 1</span>
+          <button id="nextPage" disabled aria-label="Next page">Next</button>
+        </div>
+      </div>
+      <canvas id="pdfCanvas" width="640" height="820" aria-label="PDF preview"></canvas>
+      <div class="evidence-box">
+        <div class="label">Evidence Snippet</div>
+        <div id="evidenceSnippet" class="snippet">No selection yet.</div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

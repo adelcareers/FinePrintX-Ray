@@ -1,0 +1,17 @@
+name: Lint
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+      - name: Placeholder - echo
+        run: echo "No lint tools configured. Add linters (eslint/stylelint) as needed."
