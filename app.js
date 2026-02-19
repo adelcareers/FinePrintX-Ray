@@ -17,8 +17,8 @@ const state = {
 };
 
 function setStatus(text){
-  const s = el('#status');
-  if(s) s.textContent = text;
+  const statusElement = el('#status');
+  if (statusElement) statusElement.textContent = text;
 }
 
 function setState(next){
@@ -51,8 +51,8 @@ function updateProgressStrip(next){
 }
 
 async function loadPdf(arrayBuffer){
-  const pdfjs = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.530/build/pdf.mjs');
-  pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.530/build/pdf.worker.mjs';
+  const pdfjs = await import('./pdfjs/pdf.mjs');
+  pdfjs.GlobalWorkerOptions.workerSrc = './pdfjs/pdf.worker.mjs';
   const loading = pdfjs.getDocument({ data: arrayBuffer });
   const pdf = await loading.promise;
   state.pdfDoc = pdf;
@@ -233,7 +233,7 @@ function exportReport(format){
   link.href = URL.createObjectURL(blob);
   link.download = `fineprint-report.${format === 'json' ? 'json' : 'txt'}`;
   link.click();
-  URL.revokeObjectURL(link.href);
+  setTimeout(() => URL.revokeObjectURL(link.href), 100);
 }
 
 function buildTxtExport(reportData){
@@ -267,7 +267,8 @@ async function handleFile(file){
     await loadPdf(arrayBuffer);
     state.pages = await extractPagesText(state.pdfDoc);
     const totalText = state.pages.map(p => p.text).join('');
-    if(totalText.length < 200){
+    let minTextLength = 200; // arbitrary threshold to filter out scanned PDFs without OCR
+    if(totalText.length < minTextLength){
       setState('error');
       setStatus('Unsupported PDF: text not detected (no OCR in v1).');
       return;

@@ -34,11 +34,11 @@ function makeChunk(buffer, startPage) {
 }
 
 const RULES = [
-  { type: 'fees', label: 'Fee / charge', pattern: /(fee|charge|penalty|late)/i, weight: 3 },
-  { type: 'apr', label: 'APR trigger', pattern: /(apr|interest rate|rate increase|variable rate)/i, weight: 3 },
-  { type: 'cancellation', label: 'Cancellation/termination', pattern: /(cancel|termination|close|end account)/i, weight: 2 },
-  { type: 'auto-renew', label: 'Auto-renewal', pattern: /(auto\-renew|automatic renewal)/i, weight: 2 },
-  { type: 'early-repay', label: 'Early repayment', pattern: /(early repayment|prepayment)/i, weight: 2 }
+  { type: 'fees', label: 'Fee / charge', pattern: /\b(fee|charge|penalty|late)\b/i, weight: 3 },
+  { type: 'apr', label: 'APR trigger', pattern: /\b(apr|interest rate|rate increase|variable rate)\b/i, weight: 3 },
+  { type: 'cancellation', label: 'Cancellation/termination', pattern: /\b(cancel|termination|close|end account)\b/i, weight: 2 },
+  { type: 'auto-renew', label: 'Auto-renewal', pattern: /\b(auto\-renew|automatic renewal)\b/i, weight: 2 },
+  { type: 'early-repay', label: 'Early repayment', pattern: /\b(early repayment|prepayment)\b/i, weight: 2 }
 ];
 
 export function detectFindings(pages) {
